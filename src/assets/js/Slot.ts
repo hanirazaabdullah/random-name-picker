@@ -135,20 +135,36 @@ export default class Slot {
    * @param array  The array to be shuffled
    * @returns The shuffled array
    */
+  // private static shuffleNames<T = unknown>(array: T[]): T[] {
+  //   const keys = Object.keys(array) as unknown[] as number[];
+  //   const result: T[] = [];
+  //   for (let k = 0, n = keys.length; k < array.length && n > 0; k += 1) {
+  //     // eslint-disable-next-line no-bitwise
+  //     const i = Math.random() * n | 0;
+  //     const key = keys[i];
+  //     result.push(array[key]);
+  //     n -= 1;
+  //     const tmp = keys[n];
+  //     keys[n] = key;
+  //     keys[i] = tmp;
+  //   }
+  //   return result;
+  // }
   private static shuffleNames<T = unknown>(array: T[]): T[] {
-    const keys = Object.keys(array) as unknown[] as number[];
-    const result: T[] = [];
-    for (let k = 0, n = keys.length; k < array.length && n > 0; k += 1) {
-      // eslint-disable-next-line no-bitwise
-      const i = Math.random() * n | 0;
-      const key = keys[i];
-      result.push(array[key]);
-      n -= 1;
-      const tmp = keys[n];
-      keys[n] = key;
-      keys[i] = tmp;
+    let currentIndex = array.length;
+
+    // While there remain elements to shuffle...
+    while (currentIndex !== 0) {
+      // Pick a remaining element...
+      const randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+
+      // And swap it with the current element.
+      // eslint-disable-next-line no-param-reassign
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
     }
-    return result;
+    return array;
   }
 
   /**
